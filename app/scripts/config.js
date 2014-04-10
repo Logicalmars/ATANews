@@ -1,8 +1,7 @@
 var newsfeed = [
-    {timestamp: "April 5th", text: 'Steve just fixed Crayfish server! Yeah yeah.', level: 'success'},
+    {timestamp: "April 5th", text: 'Happy wins a jackpot of 1,000 diamonds', level: 'success'},
     {timestamp: "April 4th", text: 'CRAYFISH RELEASED CASINO X VER 89 ON IOS', level: 'info'},
-    {timestamp: "April 6th", text: 'Steve just fixed Crayfish server! Yeah yeah.', level: 'danger'},
-    {timestamp: "April 4th 10am", text: 'Steve just fixed Crayfish server! Yeah yeah.', level: 'warning'},
+    {timestamp: "March 4th 10am", text: 'ATA just received best company award!', level: 'warning'},
     {timestamp: "April 10th", text: 'Steve just fixed Crayfish server!', level: 'success'},
     {timestamp: "April 10th 1pm", text: 'Steve just fixed Crayfish server! Yeah yeah.', level: 'success'},
     {timestamp: "April 4th", text: 'CRAYFISH RELEASED CASINO X VER 89 ON IOS', level: 'info'},
@@ -25,17 +24,17 @@ var build_status = [
     {project: 'Crayfish', status: 0, info: '22 days'},
     {project: 'bank', status: 0, info: '23 days'},
     {project: 'tuna', status: 0, info: '30 days'},
-    {project: 'identity', status: 1, info: 'Fail at March 30, 10am'},
+    {project: 'identity', status: 1, info: 'March 30, 10am'},
     {project: 'Jellyfish', status: 0, info: '200 days'},
     {project: 'Pokethon', status: 0, info: '22 days'},
     {project: 'property', status: 0, info: '1 day'},
     {project: 'news', status: 0, info: '30 days'},
-    {project: 'admin', status: 1, info: 'Fail at March 30, 9am'},
+    {project: 'admin', status: 1, info: 'March 30, 9am'},
     {project: 'panel', status: 0, info: '200 days'},
     {project: 'sponsorpay', status: 0, info: '7 day'},
     {project: 'momo', status: 0, info: '30 days'},
-    {project: 'redis', status: 1, info: 'Fail at March 30, 9am'},
-    {project: 'squid.db02.slave01', status: 1, info: 'Fail at March 30, 10am'},
+    {project: 'redis', status: 1, info: 'March 30, 9am'},
+    {project: 'db02.slave01', status: 1, info: 'March 30, 10am'},
 ];
 
 var build_status_text = ['success', 'danger'];

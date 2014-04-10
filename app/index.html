@@ -47,8 +47,8 @@
                     </div>
                 </div>
 
-                <div class="col-lg-5" id="newsfeed">
-                    <div>
+                <div class="col-lg-5" id="mid_column">
+                    <div id="newsfeed">
                         <h1>NEWS FEED</h1>
                         <ul class="list-group heavy2" id="newsfeed_ul"></ul>
                     </div>
@@ -56,16 +56,49 @@
                     <div class="row grid-margins"></div>
 
                     <div>
-                        <h1 class="text-warning">COUNTDOWN</h1>
+                        <h1 class="text-warning">URGENT</h1>
                         <ul class="list-group heavy2" id="countdown_ul"></ul>
                     </div>
 
                     <div class="row grid-margins"></div>
 
-                    <div class="panel panel-danger">
-                        <div class="panel-head heavy text-danger">WARN</div>
-                        <div class="panel-body">
-                            <div class="heavy" id="warn_text">Fire alarm test at 3pm. Don't panic. </div>
+                    <!--<div class="panel panel-danger">-->
+                        <!--<div class="panel-head heavy text-danger">WARN</div>-->
+                        <!--<div class="panel-body">-->
+                            <!--<div class="heavy" id="warn_text">Fire alarm test at 3pm. Don't panic. </div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <div class="row-fluid" id="progressbar_charts">
+                        <div class="col-lg-4" id="user_download_chart">
+                            <div class="progress">
+                                <div class="progress-bar-success vertical" role="progressbar" style="height: 50%;">
+                                    <div class="barheader">
+                                        5,000,000
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rowlabels">Total Download</div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="progress">
+                                <div class="progress-bar-info vertical" role="progressbar" style="height: 20%;">
+                                    <div class="barheader">
+                                        12,233
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rowlabels">Today Download</div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="progress">
+                                <div class="progress-bar-warning vertical" role="progressbar" style="height: 90%;">
+                                    <div class="barheader">
+                                        4.7 Stars
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rowlabels">Average Review</div>
                         </div>
                     </div>
                 </div>
@@ -73,7 +106,7 @@
                 <div id="right_column" class="col-lg-4">
                     <div id="jekins_div" class="panel panel-info">
                         <div class="panel-head heavy">
-                            Build status
+                            Build/Server status
                         </div>
                         <div class="panel-body" style="height: 580px">
                             <table class="table" id="project_fail_table"></table>
@@ -103,6 +136,7 @@
         <!-- build:js scripts/vendor.js -->
         <!-- bower:js -->
         <script src="../bower_components/jquery/dist/jquery.js"></script>
+        <script src="../bower_components/chartjs/Chart.min.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
 
@@ -119,13 +153,14 @@
         <script src="../bower_components/bootstrap/js/scrollspy.js"></script>
         <script src="../bower_components/bootstrap/js/collapse.js"></script>
         <script src="../bower_components/bootstrap/js/tab.js"></script>
+        <script src="../bower_components/datejs/build/date.js"></script>
+        <script src="../bower_components/chartjs/Chart.js"></script>
         <!-- endbuild -->
 
         <!-- build:js({app,.tmp}) scripts/main.js -->
         <script src="scripts/dateformat.js"></script>
         <script src="scripts/config.js"></script>
         <script src="scripts/calendar_help.js"></script>
-        <script src="../bower_components/datejs/build/date.js"></script>
         <script src="scripts/main.js"></script>
 
         <script>
