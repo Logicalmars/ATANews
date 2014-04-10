@@ -106,10 +106,11 @@
 
         <!-- build:js({app,.tmp}) scripts/main.js -->
         <script src="scripts/dateformat.js"></script>
+        <script src="../bower_components/datejs/build/date.js"></script>
+        <script src="scripts/main.js"></script>
 
         <script>
             function google_load() {
-                console.log('Im loaded');
                 gapi.client.setApiKey('AIzaSyCRFEyiWb0jqKczOdAgpdIpCTDjFlJnZ-k');
                 auth();
             }
@@ -120,14 +121,10 @@
                     'scope': 'https://www.googleapis.com/auth/calendar.readonly'
                 };
                 gapi.auth.authorize(config, function() {
-                    console.log('login complete');
-                    console.log(gapi.auth.getToken());
-
                     gapi.client.load('calendar', 'v3', function() {
                         var now = new Date();
                         var tomorrow = new Date();
                         tomorrow.setTime(tomorrow.getTime() + (1000*3600*24));
-                        console.log("tomorrow" + dateFormat(tomorrow, "isoDateTime") + 'Z');
 
                         var request = gapi.client.calendar.events.list({
                             'calendarId': 'di6nr0eduifi0n03qcdjfmhm44@group.calendar.google.com',
@@ -136,20 +133,13 @@
                         });
 
                         request.execute(function(resp) {
-                            console.log("Total = " + resp.items.length);
-                            for (var i in resp.items)
-                            {
-                                console.log(resp.items[i].start)
-                                console.log(resp.items[i].end)
-                                console.log(resp.items[i].summary)
-                            }
+                            fill_primary_calendar(resp.items);
                         });
                     });
                 });
             }
         </script>
 
-        <script src="scripts/main.js"></script>
         <script src="https://apis.google.com/js/client.js?onload=google_load"></script>
         <!-- endbuild -->
 </body>

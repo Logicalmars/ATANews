@@ -66,3 +66,41 @@
         load_jenkins_status();
     });
 })();
+
+var primay_calendar_ul = $('#primary_calendar_ul');
+
+function fill_primary_calendar(items) {
+    fill_calender(items, primay_calendar_ul);
+}
+
+function append_single_calendar_event(item, calendar_ul)
+{
+    var datestr = "";
+
+    if ('date' in item.start) {
+        datestr = "ALL DAY";
+    }
+    else {
+        datestr = dateFormat(Date.parse(item.start.dateTime), "HH:MM") + ' - ' + dateFormat(Date.parse(item.end.dateTime), "HH:MM");
+    }
+
+    calendar_ul.append(
+        $('<div class="list-group-item">').append('<p>' + datestr + '</br>' + item.summary + '</p>')
+    );
+}
+function fill_calender(items, calendar_ul)
+{
+    for (var i in items)
+    {
+        if ('date' in items[i].start) {
+            append_single_calendar_event(items[i], calendar_ul);
+        }
+    }
+
+    for (var i in items)
+    {
+        if ('dateTime' in items[i].start) {
+            append_single_calendar_event(items[i], calendar_ul);
+        }
+    }
+}
