@@ -28,7 +28,7 @@
                     <div class="panel panel-info">
                         <div class="panel-head heavy" id="calendarTitle">ATA Calendar</div>
                         <div class="panel-body">
-                            <div id="events"></div>
+                            <ul class="list-group heavy2" id="primary_calendar_ul"></ul>
                         </div>
                     </div>
                 </div>
@@ -105,6 +105,8 @@
         <!-- endbuild -->
 
         <!-- build:js({app,.tmp}) scripts/main.js -->
+        <script src="scripts/dateformat.js"></script>
+
         <script>
             function google_load() {
                 console.log('Im loaded');
@@ -122,12 +124,25 @@
                     console.log(gapi.auth.getToken());
 
                     gapi.client.load('calendar', 'v3', function() {
+                        var now = new Date();
+                        var tomorrow = new Date();
+                        tomorrow.setTime(tomorrow.getTime() + (1000*3600*24));
+                        console.log("tomorrow" + dateFormat(tomorrow, "isoDateTime") + 'Z');
+
                         var request = gapi.client.calendar.events.list({
-                            'calendarId': 'di6nr0eduifi0n03qcdjfmhm44@group.calendar.google.com'
+                            'calendarId': 'di6nr0eduifi0n03qcdjfmhm44@group.calendar.google.com',
+                            'timeMin': dateFormat(now, "isoDateTime") + 'Z',
+                            'timeMax': dateFormat(tomorrow, "isoDateTime") + 'Z',
                         });
 
                         request.execute(function(resp) {
-                            console.log(resp);
+                            console.log("Total = " + resp.items.length);
+                            for (var i in resp.items)
+                            {
+                                console.log(resp.items[i].start)
+                                console.log(resp.items[i].end)
+                                console.log(resp.items[i].summary)
+                            }
                         });
                     });
                 });
