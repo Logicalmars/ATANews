@@ -64,7 +64,5 @@
         load_newsfeed();
         load_countdown_feed();
         load_jenkins_status();
-
-        loadCalendar('https://www.google.com/calendar/feeds/developer-calendar@google.com/public/full');
     });
 })();

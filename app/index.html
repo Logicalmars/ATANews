@@ -26,9 +26,8 @@
             <div class="row">
                 <div class="col-lg-3" id="left_column">
                     <div class="panel panel-info">
-                        <div class="panel-head heavy">ATA Calendar</div>
+                        <div class="panel-head heavy" id="calendarTitle">ATA Calendar</div>
                         <div class="panel-body">
-                            <div id="calendarTitle"></div>
                             <div id="events"></div>
                         </div>
                     </div>
@@ -106,9 +105,37 @@
         <!-- endbuild -->
 
         <!-- build:js({app,.tmp}) scripts/main.js -->
+        <script>
+            function google_load() {
+                console.log('Im loaded');
+                gapi.client.setApiKey('AIzaSyCRFEyiWb0jqKczOdAgpdIpCTDjFlJnZ-k');
+                auth();
+            }
+
+            function auth() {
+                var config = {
+                    'client_id': '436101881777-a2bv0rhi4mgan8bd7f7pu0rh9uinb61r.apps.googleusercontent.com',
+                    'scope': 'https://www.googleapis.com/auth/calendar.readonly'
+                };
+                gapi.auth.authorize(config, function() {
+                    console.log('login complete');
+                    console.log(gapi.auth.getToken());
+
+                    gapi.client.load('calendar', 'v3', function() {
+                        var request = gapi.client.calendar.events.list({
+                            'calendarId': 'di6nr0eduifi0n03qcdjfmhm44@group.calendar.google.com'
+                        });
+
+                        request.execute(function(resp) {
+                            console.log(resp);
+                        });
+                    });
+                });
+            }
+        </script>
+
         <script src="scripts/main.js"></script>
-        <script type="text/javascript" src="http://www.google.com/jsapi?key=YOUR_KEY_HERE"></script>
-        <script type="text/javascript" src="scripts/google_calendar.js"></script>
+        <script src="https://apis.google.com/js/client.js?onload=google_load"></script>
         <!-- endbuild -->
 </body>
 </html>
