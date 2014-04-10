@@ -25,16 +25,16 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3" id="left_column">
-                    <div class="panel panel-info">
+                    <div class="panel panel-info" id="primary_calendar_panel">
                         <div class="panel-head heavy" id="primary_calendar_title">ATA Calendar</div>
                         <div class="panel-body">
                             <ul class="list-group heavy2" id="primary_calendar_ul"></ul>
                         </div>
                     </div>
 
-                    <div class="panel panel-info">
-                        <div class="panel-head heavy" id="secondary_calendar_title">ATA Calendar</div>
-                        <div class="panel-body">
+                    <div class="panel panel-info" id="secondary_calendar_panel">
+                        <div class="panel-head heavy" id="secondary_calendar_title">Rooms</div>
+                        <div class="panel-body" style="height: 300px">
                             <ul class="list-group heavy2" id="secondary_calendar_ul"></ul>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                         <div class="panel-head heavy">
                             Build status
                         </div>
-                        <div class="panel-body">
+                        <div class="panel-body" style="height: 600px">
                             <table class="table" id="project_fail_table"></table>
                             <table class="table" id="project_success_table"></table>
                         </div>
@@ -133,5 +133,5 @@
 
         <script src="https://apis.google.com/js/client.js?onload=google_load"></script>
         <!-- endbuild -->
-</body>
+    </body>
 </html>

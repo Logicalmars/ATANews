@@ -116,6 +116,7 @@ $(document).ready(function() {
     load_countdown_feed();
     load_build_success_status(0, BUILD_STATUS_SINGLE_PAGE_ITEMS);
     load_build_fail_status();
+    calendar_iterate();
 
     //Update animation (fliping, fadeOut/In)
     window.setInterval(calendar_iterate, CALENDAR_FLIP_INTERVAL);
