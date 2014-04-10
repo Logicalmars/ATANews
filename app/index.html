@@ -56,54 +56,21 @@
                     <div class="row grid-margins"></div>
 
                     <div>
-                        <h1 class="text-warning">Deploy</h1>
+                        <h1>Deploy</h1>
                         <ul class="list-group heavy2" id="deploy_ul"></ul>
                     </div>
 
                     <div class="row grid-margins"></div>
 
-                    <!--<div class="panel panel-danger">-->
-                        <!--<div class="panel-head heavy text-danger">WARN</div>-->
-                        <!--<div class="panel-body">-->
-                            <!--<div class="heavy" id="warn_text">Fire alarm test at 3pm. Don't panic. </div>-->
-                        <!--</div>-->
-                    <!--</div>-->
+                    <div id="charts_placeholder"></div>
 
-                    <div class="row-fluid" id="progressbar_charts">
-                        <div class="col-lg-4" id="user_download_chart">
-                            <div class="progress">
-                                <div class="progress-bar-success vertical" role="progressbar" style="height: 50%;">
-                                    <div class="barheader">
-                                        5,000,000
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="rowlabels">Total Download</div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="progress">
-                                <div class="progress-bar-info vertical" role="progressbar" style="height: 20%;">
-                                    <div class="barheader">
-                                        12,233
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="rowlabels">Today Download</div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="progress">
-                                <div class="progress-bar-warning vertical" role="progressbar" style="height: 90%;">
-                                    <div class="barheader">
-                                        4.7 Stars
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="rowlabels">Average Review</div>
-                        </div>
+                    <div class="text-center">
+                        <canvas id="game_chart" width="700" height="300"></canvas>
+                        <div class="heavy">Crayfish</div>
                     </div>
                 </div>
 
-                <div id="right_column" class="col-lg-4">
+                <div class="col-lg-4" id="right_column">
                     <div id="jekins_div" class="panel panel-info">
                         <div class="panel-head heavy">
                             Build/Server status
@@ -137,6 +104,7 @@
         <!-- bower:js -->
         <script src="../bower_components/jquery/dist/jquery.js"></script>
         <script src="../bower_components/chartjs/Chart.min.js"></script>
+        <script src="../bower_components/handlebars/handlebars.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
 
@@ -154,8 +122,55 @@
         <script src="../bower_components/bootstrap/js/collapse.js"></script>
         <script src="../bower_components/bootstrap/js/tab.js"></script>
         <script src="../bower_components/datejs/build/date.js"></script>
-        <script src="../bower_components/chartjs/Chart.js"></script>
         <!-- endbuild -->
+
+        <!--Handlebars templates-->
+        <script id="gross-chart-template" type="text/x-handlebars-template">
+            <div class="row-fluid" id="progressbar_charts">
+                <div class="col-lg-4" id="user_download_chart">
+                    <div class="progress">
+                        <div class="progress-bar-success vertical" role="progressbar" style="height: 50%;">
+                            <div class="barheader">
+                                {{download}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rowlabels">Download</div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="progress">
+                        <div class="progress-bar-info vertical" role="progressbar" style="height: 20%;">
+                            <div class="barheader">
+                                {{active_users}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rowlabels">Active Users</div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="progress">
+                        <div class="progress-bar-warning vertical" role="progressbar" style="height: 90%;">
+                            <div class="barheader">
+                                {{review_stars}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rowlabels">Average Review</div>
+                </div>
+            </div>
+        </script>
+
+        <script id="warning-template" type="text/x-handlebars-template">
+            <div class="panel panel-danger">
+                <div class="panel-head heavy text-danger">WARN</div>
+                <div class="panel-body">
+                    <div class="heavy" id="warn_text">{{warn_text}}</div>
+                </div>
+            </div>
+        </script>
+        <!--end template-->
+
+
 
         <!-- build:js({app,.tmp}) scripts/main.js -->
         <script src="scripts/dateformat.js"></script>

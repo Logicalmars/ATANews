@@ -11,6 +11,7 @@ var secondary_calendar_ul = $('#secondary_calendar_ul');
 var secondary_calendar_title = $('#secondary_calendar_title');
 
 var not_in_the_office_ul = $('#not_in_office_ul');
+var charts_placeholder_div = $('#charts_placeholder');
 
 function _load_newsfeed(offset, limit) {
     newsfeed_ul.empty();
@@ -123,6 +124,59 @@ function load_not_in_the_office()
     }
 }
 
+function load_charts()
+{
+//    charts_placeholder_div.empty();
+
+    //Load and compile handlebar template
+//    var source   = $("#gross-chart-template").html();
+//    var template = Handlebars.compile(source);
+//    var context  = {download: 5001200, active_users: 121234, review_stars: '4.7 Stars'};
+//    var html     = template(context);
+
+    //Warn
+//    var source   = $("#warning-template").html();
+//    var template = Handlebars.compile(source);
+//    var context  = {warn_text: "fire alarm test at 3pm. Don't panic"};
+//    var html     = template(context);
+
+//    charts_placeholder_div.html(html);
+
+    //Get context with jQuery - using jQuery's .get() method.
+    var ctx = $("#game_chart").get(0).getContext("2d");
+    //This will get the first returned node in the jQuery collection.
+    var myNewChart = new Chart(ctx);
+
+    var data = {
+        labels : ["January","February","March","April","May","June","July"],
+        datasets : [
+            {
+                strokeColor : "rgb(243,156,18)",
+                pointColor : "rgba(220,220,220,1)",
+                pointStrokeColor : "#fff",
+                data : [30,40,60,54,85,90,100]
+            },
+            {
+                strokeColor : "rgb(0,188,140)",
+                pointColor : "rgba(151,187,205,1)",
+                pointStrokeColor : "#fff",
+                data : [28,48,40,19,96,27,110]
+            }
+        ]
+    };
+
+    var options = {
+        scaleLineWidth : 5,
+        animation: false,
+        scaleShowGridLines: true,
+        bezierCurve: false,
+        datasetFill: false,
+        datasetStrokeWidth : 10
+    };
+
+    myNewChart.Line(data, options);
+}
+
 var current_calendar_id = 0;
 function calendar_iterate() {
     current_calendar_id += 1;
@@ -168,6 +222,7 @@ $(document).ready(function() {
     load_build_success_status(0, BUILD_STATUS_SINGLE_PAGE_ITEMS);
     load_build_fail_status();
     load_not_in_the_office();
+    load_charts();
     calendar_iterate();
 
     //Update animation (fliping, fadeOut/In)

@@ -3,7 +3,6 @@ var newsfeed = [
     {timestamp: "April 4th", text: 'CRAYFISH RELEASED CASINO X VER 89 ON IOS', level: 'info'},
     {timestamp: "March 4th 10am", text: 'ATA just received best company award!', level: 'warning'},
     {timestamp: "April 10th", text: 'Steve just fixed Crayfish server!', level: 'success'},
-    {timestamp: "April 10th 1pm", text: 'Steve just fixed Crayfish server! Yeah yeah.', level: 'success'},
     {timestamp: "April 4th", text: 'CRAYFISH RELEASED CASINO X VER 89 ON IOS', level: 'info'},
     {timestamp: "April 4th", text: 'Steve just fixed Crayfish server! Yeah yeah.', level: 'success'},
     {timestamp: "April 4th", text: 'Someone break the panel, HELP!', level: 'danger'},
