@@ -11,10 +11,10 @@ var newsfeed = [
     {timestamp: "April 4th", text: 'Steve fixed the panel, thanks.', level: 'success'}
 ];
 
-var countdown_feed = [
-    '20 days: Crayfish ad champion',
-    '17 days: Tuna ad champion',
-    '12 hours: Squid urgent fix'
+var deploy_feed = [
+    'Crayfish: David deploying...',
+    'Tuna: recently deployed at 04/01 10:20am',
+    'Jellyfish: Derek deploying...'
 ];
 
 var PROJECT_SUCCESS = 0;

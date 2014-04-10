@@ -1,5 +1,5 @@
 var newsfeed_ul = $('#newsfeed_ul');
-var countdown_ul = $('#countdown_ul');
+var deploy_ul = $('#deploy_ul');
 
 var build_status_fail_table = $('#project_fail_table');
 var build_status_success_table = $('#project_success_table');
@@ -38,10 +38,20 @@ function load_newsfeed(offset, limit) {
         _load_newsfeed(offset, limit);
 }
 
-function load_countdown_feed() {
-    for (var ci in countdown_feed) {
-        countdown_ul.append(
-            $('<li class="list-group-item">' + countdown_feed[ci] + '</li>')
+function load_deploy_feed() {
+    for (var ci in deploy_feed) {
+        var classname = 'info';
+        if (deploy_feed[ci].toLowerCase().search('deploying') >= 0)
+        {
+            classname = 'warning'
+        }
+        if (deploy_feed[ci].toLowerCase().search('deployed') >= 0)
+        {
+            classname = 'success'
+        }
+
+        deploy_ul.append(
+            $('<li class="list-group-item text-' + classname + '">' + deploy_feed[ci] + '</li>')
         );
     }
 }
@@ -154,7 +164,7 @@ function update_info() {
 
 $(document).ready(function() {
     load_newsfeed(0, NEWSFEED_SINGLE_PAGE_ITEMS);
-    load_countdown_feed();
+    load_deploy_feed();
     load_build_success_status(0, BUILD_STATUS_SINGLE_PAGE_ITEMS);
     load_build_fail_status();
     load_not_in_the_office();
