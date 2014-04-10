@@ -1,106 +1,99 @@
-(function () {
-    var newsfeed = [
-        {text: 'CRAYFISH RELEASED CASINO X VER 89 ON IOS', level: 'info'},
-        {text: 'Steve just fixed Crayfish server! Yeah yeah.', level: 'success'},
-        {text: 'Steve just fixed Crayfish server! Yeah yeah.', level: 'success'},
-        {text: 'Steve just fixed Crayfish server! Yeah yeah.', level: 'success'},
-        {text: 'Steve just fixed Crayfish server! Yeah yeah.', level: 'success'},
-        {text: 'Steve just fixed Crayfish server! Yeah yeah.', level: 'success'},
-        {text: 'Someone break the panel, HELP!', level: 'danger'},
-        {text: 'Steve fixed the panel, thanks.', level: 'success'}
-    ];
+var newsfeed_ul = $('#newsfeed_ul');
+var countdown_ul = $('#countdown_ul');
 
-    var countdown_feed = [
-        '20 days: Crayfish ad champion',
-        '17 days: Tuna ad champion',
-        '12 hours: Squid urgent fix'
-    ];
+var build_status_table = $('#jekins_project_table');
 
-    //Status: 0 success, 1 fail
-    var build_status = [
-        {project: 'Crayfish', status: 0, info: '22 days'},
-        {project: 'bank', status: 1, info: 'Fail at April 8, 11pm'},
-        {project: 'tuna', status: 0, info: '30 days'},
-        {project: 'identity', status: 1, info: 'Fail at March 30, 10am'},
-        {project: 'Jellyfish', status: 0, info: '200 days'},
-    ];
+var primary_calendar_ul = $('#primary_calendar_ul');
+var primary_calendar_title = $('#primary_calendar_title');
 
-    var build_status_text = ['success', 'danger'];
+var secondary_calendar_ul = $('#secondary_calendar_ul');
+var secondary_calendar_title = $('#secondary_calendar_title');
 
-    var newsfeed_ul = $('#newsfeed_ul');
-    var countdown_ul = $('#countdown_ul');
-    var build_status_table = $('#jekins_project_table');
 
-    function load_newsfeed() {
-        for (var newsi in newsfeed) {
-            newsfeed_ul.append(
-                $('<li class="list-group-item">').addClass('text-' + newsfeed[newsi].level).append(newsfeed[newsi].text)
-            );
-        }
+function load_newsfeed() {
+    for (var newsi in newsfeed) {
+        newsfeed_ul.append(
+            $('<li class="list-group-item">').addClass('text-' + newsfeed[newsi].level).append(newsfeed[newsi].text)
+        );
     }
+}
 
-    function load_countdown_feed() {
-        for (var ci in countdown_feed) {
-            countdown_ul.append(
-                $('<li class="list-group-item">' + countdown_feed[ci] + '</li>')
-            );
-        }
+function load_countdown_feed() {
+    for (var ci in countdown_feed) {
+        countdown_ul.append(
+            $('<li class="list-group-item">' + countdown_feed[ci] + '</li>')
+        );
     }
+}
 
-    function load_jenkins_status() {
-        for (var bsi in build_status) {
+function load_build_status(offset, limit) {
+    build_status_table.fadeOut(500, function() {
+        build_status_table.empty();
+
+        build_status_table.append($('<tr><th class="heavy">Project</th><th class="heavy">Since Last Fail</th></tr>'));
+
+        for (var bsi = offset; bsi < offset + limit && bsi < build_status.length; bsi++) {
             var project = build_status[bsi];
 
-            build_status_table.append(
-                $('<tr>')
-                    .addClass(build_status_text[project.status])
-                    .append('<td class="heavy">' + project.project + '</td>')
-                    .append('<td class="heavy">' + project.info + '</td>')
-            );
+            if (project.status == PROJECT_FAIL) {
+                build_status_table.append(
+                    $('<tr>')
+                        .addClass(build_status_text[project.status])
+                        .append('<td class="heavy">' + project.project + '</td>')
+                        .append('<td class="heavy">' + project.info + '</td>')
+                );
+            }
+            else
+            {
+                build_status_table.append(
+                    $('<tr class="text-success">')
+                        .append('<td class="heavy">' + project.project + '</td>')
+                        .append('<td class="heavy">' + project.info + '</td>')
+                )
+            }
         }
-    }
 
-    $(document).ready(function() {
-        load_newsfeed();
-        load_countdown_feed();
-        load_jenkins_status();
+        build_status_table.fadeIn();
     });
-})();
-
-var primay_calendar_ul = $('#primary_calendar_ul');
-
-function fill_primary_calendar(items) {
-    fill_calender(items, primay_calendar_ul);
 }
 
-function append_single_calendar_event(item, calendar_ul)
+function load_primary_calendar(calendarId)
 {
-    var datestr = "";
-
-    if ('date' in item.start) {
-        datestr = "ALL DAY";
-    }
-    else {
-        datestr = dateFormat(Date.parse(item.start.dateTime), "HH:MM") + ' - ' + dateFormat(Date.parse(item.end.dateTime), "HH:MM");
-    }
-
-    calendar_ul.append(
-        $('<div class="list-group-item">').append('<p>' + datestr + '</br>' + item.summary + '</p>')
-    );
+    load_calendar(calendarId, primary_calendar_ul, primary_calendar_title);
 }
-function fill_calender(items, calendar_ul)
+
+function load_secondary_calendar(calendarId)
 {
-    for (var i in items)
+    load_calendar(calendarId, secondary_calendar_ul, secondary_calendar_title);
+}
+
+var current_calendar_id = 0;
+function calendar_iterate() {
+    current_calendar_id += 1;
+    if (current_calendar_id >= secondary_calendar_ids.length)
     {
-        if ('date' in items[i].start) {
-            append_single_calendar_event(items[i], calendar_ul);
-        }
+        current_calendar_id = 0;
     }
 
-    for (var i in items)
-    {
-        if ('dateTime' in items[i].start) {
-            append_single_calendar_event(items[i], calendar_ul);
-        }
-    }
+    load_secondary_calendar(secondary_calendar_ids[current_calendar_id]);
 }
+
+var current_build_status_id = 0;
+function build_status_iterate() {
+    current_build_status_id += BUILD_STATUS_SINGLE_PAGE_ITEMS;
+    if (current_build_status_id >= build_status.length)
+    {
+        current_build_status_id = 0;
+    }
+
+    load_build_status(current_build_status_id, BUILD_STATUS_SINGLE_PAGE_ITEMS);
+}
+
+$(document).ready(function() {
+    load_newsfeed();
+    load_countdown_feed();
+    load_build_status(0, BUILD_STATUS_SINGLE_PAGE_ITEMS);
+
+    window.setInterval(calendar_iterate, CALENDAR_FLIP_INTERVAL);
+    window.setInterval(build_status_iterate, BUILD_STATUS_FLIP_INTERVAL);
+});

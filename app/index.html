@@ -26,9 +26,16 @@
             <div class="row">
                 <div class="col-lg-3" id="left_column">
                     <div class="panel panel-info">
-                        <div class="panel-head heavy" id="calendarTitle">ATA Calendar</div>
+                        <div class="panel-head heavy" id="primary_calendar_title">ATA Calendar</div>
                         <div class="panel-body">
                             <ul class="list-group heavy2" id="primary_calendar_ul"></ul>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-info">
+                        <div class="panel-head heavy" id="secondary_calendar_title">ATA Calendar</div>
+                        <div class="panel-body">
+                            <ul class="list-group heavy2" id="secondary_calendar_ul"></ul>
                         </div>
                     </div>
                 </div>
@@ -63,10 +70,6 @@
                         </div>
                         <div class="panel-body">
                             <table class="table" id="jekins_project_table">
-                                <tr>
-                                    <th>Project</th>
-                                    <th>Since Last Fail</th>
-                                </tr>
                             </table>
                         </div>
                     </div>
@@ -106,6 +109,8 @@
 
         <!-- build:js({app,.tmp}) scripts/main.js -->
         <script src="scripts/dateformat.js"></script>
+        <script src="scripts/config.js"></script>
+        <script src="scripts/calendar_help.js"></script>
         <script src="../bower_components/datejs/build/date.js"></script>
         <script src="scripts/main.js"></script>
 
@@ -121,21 +126,7 @@
                     'scope': 'https://www.googleapis.com/auth/calendar.readonly'
                 };
                 gapi.auth.authorize(config, function() {
-                    gapi.client.load('calendar', 'v3', function() {
-                        var now = new Date();
-                        var tomorrow = new Date();
-                        tomorrow.setTime(tomorrow.getTime() + (1000*3600*24));
-
-                        var request = gapi.client.calendar.events.list({
-                            'calendarId': 'di6nr0eduifi0n03qcdjfmhm44@group.calendar.google.com',
-                            'timeMin': dateFormat(now, "isoDateTime") + 'Z',
-                            'timeMax': dateFormat(tomorrow, "isoDateTime") + 'Z',
-                        });
-
-                        request.execute(function(resp) {
-                            fill_primary_calendar(resp.items);
-                        });
-                    });
+                    load_primary_calendar('di6nr0eduifi0n03qcdjfmhm44@group.calendar.google.com');
                 });
             }
         </script>
