@@ -18,6 +18,7 @@ function fill_calender(items, calendar_ul)
 {
     for (var i in items)
     {
+        // All day events
         if ('date' in items[i].start) {
             append_single_calendar_event(items[i], calendar_ul);
         }

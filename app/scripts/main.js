@@ -105,7 +105,7 @@ function build_status_iterate() {
     load_build_success_status(current_build_status_id, BUILD_STATUS_SINGLE_PAGE_ITEMS);
 }
 
-// Update static information
+// Update static information, usually in a longer time interval
 function update_info() {
     load_primary_calendar(PRIMARY_CALENDAR_ID);
     load_build_fail_status();
