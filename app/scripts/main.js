@@ -10,13 +10,32 @@ var primary_calendar_title = $('#primary_calendar_title');
 var secondary_calendar_ul = $('#secondary_calendar_ul');
 var secondary_calendar_title = $('#secondary_calendar_title');
 
+var not_in_the_office_ul = $('#not_in_office_ul');
 
-function load_newsfeed() {
-    for (var newsi in newsfeed) {
+function _load_newsfeed(offset, limit) {
+    newsfeed_ul.empty();
+
+    var newsi = offset;
+    for (var i = 0; i < limit; i++)
+    {
         newsfeed_ul.append(
-            $('<li class="list-group-item">').addClass('text-' + newsfeed[newsi].level).append(newsfeed[newsi].text)
+            $('<li class="list-group-item">')
+                .addClass('text-' + newsfeed[newsi].level)
+                .append(newsfeed[newsi].timestamp + '</br>' + newsfeed[newsi].text)
         );
+
+        newsi = (newsi + 1) % newsfeed.length;
     }
+}
+
+function load_newsfeed(offset, limit) {
+    var first_child = newsfeed_ul.children(':first');
+    console.log(first_child);
+
+    if (first_child.length)
+        first_child.fadeOut(500, function() {_load_newsfeed(offset, limit);});
+    else
+        _load_newsfeed(offset, limit);
 }
 
 function load_countdown_feed() {
@@ -83,6 +102,17 @@ function load_secondary_calendar(calendarId)
     load_calendar(calendarId, secondary_calendar_ul, secondary_calendar_title);
 }
 
+function load_not_in_the_office()
+{
+    not_in_the_office_ul.empty();
+    for (var i in people_not_in_the_office)
+    {
+        not_in_the_office_ul.append(
+            $('<li>' + people_not_in_the_office[i] + '</li>')
+        );
+    }
+}
+
 var current_calendar_id = 0;
 function calendar_iterate() {
     current_calendar_id += 1;
@@ -105,6 +135,17 @@ function build_status_iterate() {
     load_build_success_status(current_build_status_id, BUILD_STATUS_SINGLE_PAGE_ITEMS);
 }
 
+var current_newsfeed_id = 0;
+function newsfeed_iterate() {
+    current_newsfeed_id ++;
+    if (current_newsfeed_id >= newsfeed.length)
+    {
+        current_newsfeed_id = 0;
+    }
+
+    load_newsfeed(current_newsfeed_id, NEWSFEED_SINGLE_PAGE_ITEMS);
+}
+
 // Update static information, usually in a longer time interval
 function update_info() {
     load_primary_calendar(PRIMARY_CALENDAR_ID);
@@ -112,15 +153,17 @@ function update_info() {
 }
 
 $(document).ready(function() {
-    load_newsfeed();
+    load_newsfeed(0, NEWSFEED_SINGLE_PAGE_ITEMS);
     load_countdown_feed();
     load_build_success_status(0, BUILD_STATUS_SINGLE_PAGE_ITEMS);
     load_build_fail_status();
+    load_not_in_the_office();
     calendar_iterate();
 
     //Update animation (fliping, fadeOut/In)
     window.setInterval(calendar_iterate, CALENDAR_FLIP_INTERVAL);
     window.setInterval(build_status_iterate, BUILD_STATUS_FLIP_INTERVAL);
+    window.setInterval(newsfeed_iterate, NEWSFEED_STATUS_FLIP_INTERVAL);
 
     //Update information
     window.setInterval(update_info, UPDATE_INFORMATION_INTERVAL);
