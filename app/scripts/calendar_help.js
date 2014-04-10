@@ -33,22 +33,26 @@ function fill_calender(items, calendar_ul)
 
 function load_calendar(calendarId, calendar_ul, calendar_title)
 {
-    calendar_ul.empty();
+    calendar_ul.fadeOut(500, function() {
+        calendar_ul.empty();
 
-    gapi.client.load('calendar', 'v3', function() {
-        var now = new Date();
-        var tomorrow = new Date();
-        tomorrow.setTime(tomorrow.getTime() + (1000*3600*24));
+        gapi.client.load('calendar', 'v3', function() {
+            var now = new Date();
+            var tomorrow = new Date();
+            tomorrow.setTime(tomorrow.getTime() + (1000*3600*24));
 
-        var request = gapi.client.calendar.events.list({
-            'calendarId': calendarId,
-            'timeMin': dateFormat(now, "isoDateTime") + 'Z',
-            'timeMax': dateFormat(tomorrow, "isoDateTime") + 'Z',
-        });
+            var request = gapi.client.calendar.events.list({
+                'calendarId': calendarId,
+                'timeMin': dateFormat(now, "isoDateTime") + 'Z',
+                'timeMax': dateFormat(tomorrow, "isoDateTime") + 'Z',
+            });
 
-        request.execute(function(resp) {
-            calendar_title.text(resp.summary);
-            fill_calender(resp.items, calendar_ul);
+            request.execute(function(resp) {
+                calendar_title.text(resp.summary);
+                fill_calender(resp.items, calendar_ul);
+
+                calendar_ul.fadeIn();
+            });
         });
     });
 }

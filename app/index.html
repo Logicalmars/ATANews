@@ -69,8 +69,8 @@
                             Build status
                         </div>
                         <div class="panel-body">
-                            <table class="table" id="jekins_project_table">
-                            </table>
+                            <table class="table" id="project_fail_table"></table>
+                            <table class="table" id="project_success_table"></table>
                         </div>
                     </div>
 
@@ -126,7 +126,7 @@
                     'scope': 'https://www.googleapis.com/auth/calendar.readonly'
                 };
                 gapi.auth.authorize(config, function() {
-                    load_primary_calendar('di6nr0eduifi0n03qcdjfmhm44@group.calendar.google.com');
+                    load_primary_calendar(PRIMARY_CALENDAR_ID);
                 });
             }
         </script>

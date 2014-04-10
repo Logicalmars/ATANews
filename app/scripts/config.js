@@ -50,6 +50,10 @@ var secondary_calendar_ids = [
 
 // time to flip calendar. in millisecond
 var CALENDAR_FLIP_INTERVAL = 5000;
-
 var BUILD_STATUS_FLIP_INTERVAL = 8000;
+
+// time to update static information
+var UPDATE_INFORMATION_INTERVAL = 10 * 60 * 1000;
+
 var BUILD_STATUS_SINGLE_PAGE_ITEMS = 5;
+
