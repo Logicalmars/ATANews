@@ -11,7 +11,9 @@ var secondary_calendar_ul = $('#secondary_calendar_ul');
 var secondary_calendar_title = $('#secondary_calendar_title');
 
 var not_in_the_office_ul = $('#not_in_office_ul');
+
 var charts_placeholder_div = $('#charts_placeholder');
+var charts_canvas_div = $('#chart_canvas_div');
 
 function _load_newsfeed(offset, limit) {
     newsfeed_ul.empty();
@@ -64,7 +66,7 @@ function load_build_fail_status() {
         for (var bsi = 0; bsi < build_status.length; bsi++) {
             var project = build_status[bsi];
 
-            if (project.status == PROJECT_FAIL)
+            if (project.status === PROJECT_FAIL)
             {
                 build_status_fail_table.append(
                     $('<tr>')
@@ -124,23 +126,38 @@ function load_not_in_the_office()
     }
 }
 
-function load_charts()
+function load_warn()
 {
-//    charts_placeholder_div.empty();
-
-    //Load and compile handlebar template
-//    var source   = $("#gross-chart-template").html();
-//    var template = Handlebars.compile(source);
-//    var context  = {download: 5001200, active_users: 121234, review_stars: '4.7 Stars'};
-//    var html     = template(context);
+    charts_placeholder_div.empty();
+    charts_canvas_div.hide();
 
     //Warn
-//    var source   = $("#warning-template").html();
-//    var template = Handlebars.compile(source);
-//    var context  = {warn_text: "fire alarm test at 3pm. Don't panic"};
-//    var html     = template(context);
+    var source   = $("#warning-template").html();
+    var template = Handlebars.compile(source);
+    var context  = {warn_text: "fire alarm test at 3pm. Don't panic"};
+    var html     = template(context);
 
-//    charts_placeholder_div.html(html);
+    charts_placeholder_div.html(html);
+}
+
+function load_gross_chart()
+{
+    charts_placeholder_div.empty();
+    charts_canvas_div.hide();
+
+    //Load and compile handlebar template
+    var source   = $("#gross-chart-template").html();
+    var template = Handlebars.compile(source);
+    var context  = {download: 5001200, active_users: 121234, review_stars: '4.7 Stars'};
+    var html     = template(context);
+
+    charts_placeholder_div.html(html);
+}
+
+function load_game_chart()
+{
+    charts_placeholder_div.empty();
+    charts_canvas_div.show();
 
     //Get context with jQuery - using jQuery's .get() method.
     var ctx = $("#game_chart").get(0).getContext("2d");
@@ -166,7 +183,9 @@ function load_charts()
     };
 
     var options = {
-        scaleLineWidth : 5,
+        scaleLineColor : "rgb(52,152,213)",
+        scaleFontStyle : "bold",
+        scaleLineWidth : 3,
         animation: false,
         scaleShowGridLines: true,
         bezierCurve: false,
@@ -210,6 +229,24 @@ function newsfeed_iterate() {
     load_newsfeed(current_newsfeed_id, NEWSFEED_SINGLE_PAGE_ITEMS);
 }
 
+var current_charts = 0;
+function charts_iterate() {
+    current_charts = (current_charts + 1) % 3;
+
+    switch (current_charts)
+    {
+        case 0:
+            load_warn();
+            break;
+        case 1:
+            load_gross_chart();
+            break;
+        case 2:
+            load_game_chart();
+            break;
+    }
+}
+
 // Update static information, usually in a longer time interval
 function update_info() {
     load_primary_calendar(PRIMARY_CALENDAR_ID);
@@ -222,13 +259,14 @@ $(document).ready(function() {
     load_build_success_status(0, BUILD_STATUS_SINGLE_PAGE_ITEMS);
     load_build_fail_status();
     load_not_in_the_office();
-    load_charts();
+    load_gross_chart();
     calendar_iterate();
 
     //Update animation (fliping, fadeOut/In)
     window.setInterval(calendar_iterate, CALENDAR_FLIP_INTERVAL);
     window.setInterval(build_status_iterate, BUILD_STATUS_FLIP_INTERVAL);
     window.setInterval(newsfeed_iterate, NEWSFEED_STATUS_FLIP_INTERVAL);
+    window.setInterval(charts_iterate, CHARTS_FLIP_INTERVAL);
 
     //Update information
     window.setInterval(update_info, UPDATE_INFORMATION_INTERVAL);

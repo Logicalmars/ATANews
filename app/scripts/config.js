@@ -52,6 +52,7 @@ var secondary_calendar_ids = [
 var CALENDAR_FLIP_INTERVAL = 10000;
 var BUILD_STATUS_FLIP_INTERVAL = 8000;
 var NEWSFEED_STATUS_FLIP_INTERVAL = 10000;
+var CHARTS_FLIP_INTERVAL = 8000;
 // time to update static information
 var UPDATE_INFORMATION_INTERVAL = 10 * 60 * 1000;
 
